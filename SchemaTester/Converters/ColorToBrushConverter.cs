@@ -4,8 +4,10 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
+using JetBrains.Annotations;
 
-namespace SchemeTester.Converters {
+namespace SchemaTester.Converters {
+    [UsedImplicitly]
     public sealed class ColorToBrushConverterExtension : MarkupExtension, IValueConverter {
         public override object ProvideValue(IServiceProvider serviceProvider) => this;
 

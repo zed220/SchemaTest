@@ -1,4 +1,4 @@
-﻿namespace SchemeTester {
+﻿namespace SchemaTester {
     public partial class App {
     }
 }

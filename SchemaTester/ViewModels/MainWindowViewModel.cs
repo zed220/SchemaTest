@@ -4,20 +4,21 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Windows.Input;
 using System.Windows.Media;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
-using SchemeTester.Common;
-using SchemeTester.Data;
-using SchemeTester.Logic;
-using SchemeTester.TestDataHelper;
+using SchemaTester.Common;
+using SchemaTester.Data;
+using SchemaTester.Logic;
+using SchemaTester.Models;
+using SchemaTester.TestDataHelper;
 
-namespace SchemeTester.ViewModels {
+namespace SchemaTester.ViewModels {
     internal sealed class MainWindowViewModel : INotifyPropertyChanged {
-        private Geometry _pathScheme;
-        private IReadOnlyList<Tuple<string, Geometry>> _fills;
-        private Tuple<string, Geometry> _selectedFill;
+        private Geometry _pathSchema;
+        private IReadOnlyList<FillIModel> _fills;
+        private FillIModel _selectedFill;
         private const string TestDataFileName = @".\test.tst";
 
         public MainWindowViewModel() {
@@ -27,15 +28,15 @@ namespace SchemeTester.ViewModels {
 
         public ICommand LoadDataCommand { get; }
 
-        public Geometry PathScheme {
-            get => _pathScheme;
+        public Geometry PathSchema {
+            get => _pathSchema;
             private set {
-                _pathScheme = value;
+                _pathSchema = value;
                 OnPropertyChanged();
             }
         }
 
-        public IReadOnlyList<Tuple<string, Geometry>> Fills {
+        public IReadOnlyList<FillIModel> Fills {
             get => _fills;
             private set {
                 _fills = value;
@@ -43,7 +44,7 @@ namespace SchemeTester.ViewModels {
             }
         }
 
-        public Tuple<string, Geometry> SelectedFill {
+        public FillIModel SelectedFill {
             get => _selectedFill;
             set {
                 _selectedFill = value;
@@ -52,10 +53,11 @@ namespace SchemeTester.ViewModels {
         }
 
         private void LoadTestData() {
-            using var file = File.OpenText(TestDataFileName);
-            var data = (Scheme)JsonSerializer.CreateDefault().Deserialize(file, typeof(Scheme));
-            PathScheme = PathBuilder.DataToGeometry(data);
-            Fills = PathBuilder.DataToGeometryFill(data).Select(x => new Tuple<string, Geometry>(x.Key, x.Value)).ToList();
+            using var file = File.OpenRead(TestDataFileName);
+            var data = JsonSerializer.Deserialize<Schema>(file);
+            var (lines, fills) = data.ToGeometry();
+            PathSchema = lines;
+            Fills = fills;
             SelectedFill = Fills.FirstOrDefault();
         }
 

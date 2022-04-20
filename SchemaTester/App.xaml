@@ -1,20 +1,20 @@
-﻿<Application x:Class="SchemeTester.App"
+﻿<Application x:Class="SchemaTester.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:SchemeTester.Controls"
-             xmlns:converters="clr-namespace:SchemeTester.Converters"
+             xmlns:controls="clr-namespace:SchemaTester.Controls"
+             xmlns:converters="clr-namespace:SchemaTester.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="{x:Type controls:SchemeControl}">
+        <Style TargetType="{x:Type controls:SchemaControl}">
             <Setter Property="FillColor" Value="#3300FF00"/>
             <Setter Property="StrokeColor" Value="#55000000"/>
-            <Setter Property="DotColor" Value="Black"/>
+            <Setter Property="PointColor" Value="Black"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type controls:SchemeControl}">
+                    <ControlTemplate TargetType="{x:Type controls:SchemaControl}">
                         <Grid>
                             <Path x:Name="pathFill" Data="{TemplateBinding PathFill}" Stretch="None" Stroke="White" Fill="{TemplateBinding FillColor, Converter={converters:ColorToBrushConverter}}" />
-                            <Path x:Name="pathScheme" Data="{TemplateBinding PathScheme}" Stretch="None" Stroke="{TemplateBinding StrokeColor, Converter={converters:ColorToBrushConverter}}" Fill="{TemplateBinding DotColor, Converter={converters:ColorToBrushConverter}}" />
+                            <Path x:Name="pathSchema" Data="{TemplateBinding PathSchema}" Stretch="None" Stroke="{TemplateBinding StrokeColor, Converter={converters:ColorToBrushConverter}}" Fill="{TemplateBinding PointColor, Converter={converters:ColorToBrushConverter}}" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

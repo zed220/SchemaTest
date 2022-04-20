@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace SchemeTester.Common
+namespace SchemaTester.Common
 {
     internal sealed class SimpleCommand : ICommand
     {
